@@ -1,4 +1,4 @@
-#Braintree Drop-in UI
+# Braintree Drop-in UI
 
 To be used for testing purposes. A simple implementation of the Drop-in using Express. 
 
