@@ -1,5 +1,5 @@
 # Ignore node_modules folder
-server-side/node_modules/
+node_modules
 
 # Ignore files related to API keys
-server-side/.env
+.env
