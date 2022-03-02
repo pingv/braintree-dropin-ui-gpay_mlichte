@@ -1,6 +1,6 @@
 // dummy data
 var threeDSecureParameters = {
-  amount: "20",
+  amount: "10",
   email: "test@example.com",
   billingAddress: {
     givenName: "Jill", // ASCII-printable characters required, else will throw a validation error
@@ -32,6 +32,7 @@ var threeDSecureParameters = {
 const getClientToken = async () => {
   const response = await fetch("/client_token");
   const clientToken = await response.json();
+  console.log(clientToken);
   return clientToken;
 };
 
@@ -40,8 +41,15 @@ const createDropIn = (clientToken) => {
     {
       authorization: clientToken.braintreeclienttoken,
       container: "#dropin-container",
-      threeDSecure: true,
+      applePay: {
+        displayName: "Merchant Name",
+        paymentRequest: {
+          label: "Localized Name",
+          total: "10.00",
+        },
+      },
     },
+
     function (err, dropinInstance) {
       if (err) {
         // Handle any errors that might've occurred when creating Drop-in
