@@ -41,12 +41,34 @@ const createDropIn = (clientToken) => {
     {
       authorization: clientToken.braintreeclienttoken,
       container: "#dropin-container",
+
       applePay: {
         displayName: "Merchant Name",
         paymentRequest: {
           label: "Localized Name",
           total: "10.00",
         },
+      },
+      googlePay: {
+        googlePayVersion: 2,
+        transactionInfo: {
+          totalPriceStatus: "FINAL",
+          totalPrice: "10",
+          currencyCode: "USD",
+        },
+        shippingAddressRequired: true,
+        allowedPaymentMethods: [
+          {
+            type: "CARD",
+            parameters: {
+              // We recommend collecting and passing billing address information with all Google Pay transactions as a best practice.
+              billingAddressRequired: true,
+              billingAddressParameters: {
+                format: "FULL",
+              },
+            },
+          },
+        ],
       },
     },
 
@@ -56,6 +78,8 @@ const createDropIn = (clientToken) => {
         console.error(err);
         return;
       }
+      var paymentOptions = dropinInstance.getAvailablePaymentOptions(); // ['card', 'venmo', 'paypal']
+      console.log(paymentOptions);
       var requestPaymentMethodButton = document.querySelector("#submit-button");
       requestPaymentMethodButton.addEventListener("click", function (e) {
         e.preventDefault();
