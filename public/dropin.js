@@ -41,7 +41,7 @@ const createDropIn = (clientToken) => {
     {
       authorization: clientToken.braintreeclienttoken,
       container: "#dropin-container",
-
+      dataCollector: true,
       applePay: {
         displayName: "Merchant Name",
         paymentRequest: {
@@ -69,6 +69,15 @@ const createDropIn = (clientToken) => {
             },
           },
         ],
+      },
+      paypal: {
+        flow: "vault",
+        intent: "authorize",
+        amount: "10",
+        currency: "USD",
+        locale: "en_US",
+        enableShippingAddress: true,
+        shippingAddressEditable: true,
       },
     },
 
@@ -111,6 +120,7 @@ const createTransaction = async (payload, amount) => {
   const formData = {
     nonce: payload.nonce,
     amount: amount,
+    deviceData: payload.deviceData,
   };
   console.log(formData);
   const response = await fetch("/checkout", {

@@ -32,12 +32,18 @@ app.listen(port, () => {
 // create client token
 
 app.get("/client_token", (req, res) => {
-  gateway.clientToken.generate({}, (err, response) => {
-    if (err) {
-      res.status(500).send(err);
+  const customerID = req.body.cusotmerID;
+  gateway.clientToken.generate(
+    {
+      customerId: customerID,
+    },
+    (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({ braintreeclienttoken: response.clientToken });
     }
-    res.json({ braintreeclienttoken: response.clientToken });
-  });
+  );
 });
 
 // create transaction
@@ -61,6 +67,7 @@ app.post("/checkout", (req, res) => {
     },
     (err, result) => {
       if (err) {
+        console.log(err);
         res.send(err);
         return;
       }
