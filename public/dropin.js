@@ -49,6 +49,9 @@ const createDropIn = (clientToken) => {
           total: "10.00",
         },
       },
+      card: {
+        cardholderName: true,
+      },
       googlePay: {
         googlePayVersion: 2,
         transactionInfo: {
